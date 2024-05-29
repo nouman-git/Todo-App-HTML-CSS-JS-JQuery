@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css.css">
+<!-- link for animantion -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<!-- icon for tab logo -->
+<link rel="icon" href="assets/images/logo (1).png" width="30px" type="image/icon type">
+
+
+<title>Crud Operations</title>
+</head>
+<body>
+    
+  <!-- Side-Nav -->
+  <div class="side-navbar" id="sidebar">
+    <ul class="nav flex-column text-white w-100 mt-1">
+        <li class="logo_img mb-3">
+            <img src="assets/images/logo (1).png" width="40px" alt="logo">
+            <div class="mt-2 pl-2" id="side_nav_heading"><strong>C R U D</strong></div>
+        </li> 
+      
+      <li href="#" class="nav-link">
+        <div class="w-100 addList"  data-bs-toggle="collapse" data-bs-target="#add-list">
+            <i class="fa fa-plus"></i>
+            <span class="mx-3">Create</span>
+        </div>
+        <div id="add-list" class="collapse">
+            <div class="container">
+                <form class="requires-validation w-100" novalidate>
+                  <div class="col-md-12 pt-2">
+                    <label class="form-input-label">Title:</label>
+                    <input class="form-control" type="text" name="title" id="title"  placeholder="Title" required>
+                    <div class="valid-feedback">Title field is valid!</div>
+                    <div class="invalid-feedback">Title field cannot be blank!</div>
+                  </div>
+                  <div class="col-md-12 pt-2">
+                    <label class="form-textarea-label">Description:</label>
+                    <textarea class="form-control" name="description" placeholder="Description" id="description" required></textarea>
+                    <div class="valid-feedback">Description field is valid!</div>
+                    <div class="invalid-feedback">Description field cannot be blank!</div>
+                  </div>
+                  <div class="form-switch pt-2">
+                    <label class="form-check-label">Status:</label>
+                    <input class="form-check-input" type="checkbox" value="1" name="status" id="invalidCheck">
+                  </div>
+                  <div class="form-button py-2 text-end">
+                    <button id="submit" class="btn btn-add ">Add</button>
+                  </div>
+                </form>
+    
+            </div>
+        </div>
+      </li>
+      <li href="#" class="nav-link">
+        <div class="w-100 allModal">
+            <i class="fas fa-clipboard-list"></i>
+            <span class="mx-3">Read</span>
+        </div>
+      </li>
+      <li href="#" class="nav-link">
+        <div class="w-100 allModal editModal1">
+            <i class="fa fa-edit"></i>
+            <span class="mx-2">Update</span>
+        </div>
+      </li>
+      <li href="#" class="nav-link">
+        <div class="w-100 allModal deleteModal1">
+            <i class="fa fa-trash"></i>
+            <span class="mx-3">Delete</span>
+        </div>
+      </li>
+    </ul>
+    <!-- <i class="fa fa-angle-right rotate"></i> -->
+    
+      <a class="btn border-0 shadow" id="menu-btn"><i class="fa fa-bars"></i></a>
+  </div>
+
+  <!-- Main Wrapper -->
+  <div class="my-container">
+    <!-- Top Nav -->
+    <div class="welcome"> 
+        <h1><img src="assets/images/logo (1).png" width="50px" id="welcome_img"alt="logo_img">CRUD OPERATIONS</h1>
+        <h2 class="animate__animated animate__fadeInDown animate__delay-1s"> Create | Read | Update | Delete </h2>
+    </div>
+    <!--End Top Nav -->
+  </div>
+
+  
+  <!-- All Modal -->
+  <div class="modal fade" id="allModal" tabindex="-1" aria-labelledby="allModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="allModalLabel">All Tasks</h4>
+          <button type="button" class="btn-close btnAllClose"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-bordered table-light table-striped text-center">
+            <thead>
+              <th>Id</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th class="edit_delete">Operation</th>
+            </thead>
+            <tbody id="allData"></tbody>
+          </table>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btnAllClose">Close</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="editModalLabel">Update Tasks</h4>
+          <button type="button" class="btn-close btneditClose"></button>
+        </div>
+        <div class="modal-body">
+          <form class="editForm">
+            <div class="dataReference">
+              <div class="form-group">
+                <input class="form-control" type="hidden" name="id" id="EditId" required>
+                <label for="EditStatus" class="text-dark">Title:</label>
+                <input id="EditTitle" class="form-control" type="text" name="title" placeholder="Title" required>
+                <div class="valid-feedback">Title field is valid!</div>
+                <div class="invalid-feedback">Title field cannot be blank!</div>
+              </div>
+              <div class="form-group">
+                <label for="Editdescription" class="text-dark">Description:</label>
+                <textarea name="description" id="Editdescription" class="form-control" placeholder="Description" required></textarea>
+                <div class="valid-feedback">Description field is valid!</div>
+                <div class="invalid-feedback">Description field cannot be blank!</div>
+              </div>
+              <div class="form-switch pt-2">
+                <label class="form-check-label text-dark">Status:</label>
+                <input class="form-check-input" type="checkbox" value="1" name="status" id="EditStatus">
+              </div>
+            </div>
+        </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn editData">Update</button>
+          <!-- <button type="button" class="btn btn-secondary btneditClose">Close</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
